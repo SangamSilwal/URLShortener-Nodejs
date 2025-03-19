@@ -1,0 +1,25 @@
+{
+  "name": "shorturlnode",
+  "version": "1.0.0",
+  "description": "This is a URL shortener which is build with nodejs - Express framework. It will keep a decent track of url and number of clicks on the Shorten Url",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SangamSilwal/URLShortener-Nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SangamSilwal/URLShortener-Nodejs/issues"
+  },
+  "homepage": "https://github.com/SangamSilwal/URLShortener-Nodejs#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "nodemon": "^3.1.9",
+    "shortid": "^2.2.17"
+  }
+}

@@ -9,7 +9,9 @@ router.post("/",handleGenerateNewShortURL);
 router.get("/get/url/:id",async (req,res) =>{
     const url = req.params.id;
     const web = await URL.findOne({shortId: url})
-    res.send(web)
+    res.render("home",{
+        allweb: web,
+    });
 
 })
 

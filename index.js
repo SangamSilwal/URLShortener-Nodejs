@@ -6,7 +6,9 @@ const path = require('path')
 const app = express();
 const PORT = 8001;
 const staticRoute = require('./routes/static')
-
+const userRoute = require('./routes/user')
+const cookieParser = require('cookie-parser')
+const {restrictTologgedUser} = require('./middleware/auth')
 
 
 //Connecting with the mongoDB database
@@ -25,11 +27,11 @@ app.set("views",path.resolve("./views"));
 //Handling middelWare
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
+app.use(cookieParser());
 
 
-
-app.use("/url",URLroute);
-app.use("/",staticRoute)
-
+app.use("/url",restrictTologgedUser,URLroute);
+app.use("/",staticRoute);
+app.use("/user",userRoute);
 
 app.listen(PORT,() => console.log("Listening to the port 8001"));

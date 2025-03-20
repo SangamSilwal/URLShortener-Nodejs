@@ -3,56 +3,30 @@ const URLroute = require('./routes/url');
 const connectToMongoDB = require('./connect');
 const URL = require("./models/url")
 const path = require('path')
-
 const app = express();
-
 const PORT = 8001;
 
 
+
+//Connecting with the mongoDB database
 connectToMongoDB('mongodb://localhost:27017/short-url')
 .then(()=>console.log("MongoDB connected"))
 .catch((error) => console.log("OOPS ERROR IS: ",error))
 
+
+
+//Serverside rendering using EJS
 app.set("view engine","ejs");
 app.set("views",path.resolve("./views"));
 
 
+
+//Handling middelWare
 app.use(express.json());
+
+
+
+
 app.use("/url",URLroute);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-app.get("/:sid",async (req,res) =>{
-    try {
-        const shortid = req.params.sid;
-
-        const redurl = await URL.findOneAndUpdate(
-            { shortId:shortid },
-            { $push: { visitHistory: { timestamp: Date.now() } } },
-            { new: true }
-        );
-
-        if (!redurl) {
-            return res.status(404).json({ error: "Short URL not found" });
-        }
-        console.log("The problem: \n")
-        console.log(redurl)
-        res.redirect(redurl.redirectURL); 
-    } catch (error) {
-        console.error("Error handling short URL:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
 
 app.listen(PORT,() => console.log("Listening to the port 8001"));

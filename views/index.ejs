@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>URL shortener</h1>
+    <form method="POST" action="/url">
+        <label for="url">Enter URL</label>
+        <input type="text" name="url" placeholder="enter url">
+        <button type="submit">Generate</button>
+
+
+    </form>
+    <% if (typeof newe !== "undefined" && newe) { %>
+        <p>Shortened URL: <%= newe.redirectURL %></p>
+    <% } %>
+</body>
+</html>

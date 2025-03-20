@@ -3,19 +3,25 @@ const URL = require('../models/url');
 const express = require('express')
 
 
-async function handleGenerateNewShortURL(req,res) {
+
+async function handleGenerateNewShortURL(req, res) {
     const body = req.body;
-    if(!body.url) return res.status(400).json({error: "Url is required"});
-    const shortID = shortid(8);
+    if (!body.url) return res.status(400).json({ error: "Url is required" });
 
+    const shortID = shortid.generate();
 
-    await URL.create({
-        shortId: shortID,
-        redirectURL : body.url,
-        visitHistory: [],
-    });
+    try {
+        const newlyCreated = await URL.create({
+            shortId: shortID,
+            redirectURL: body.url,
+            visitHistory: [],
+        });
 
-    return res.json({id: shortID});
+        return res.render("index", { newe: newlyCreated });
+    } catch (error) {
+        console.error("Database error:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
 }
 
 

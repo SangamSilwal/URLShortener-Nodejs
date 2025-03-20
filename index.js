@@ -5,6 +5,7 @@ const URL = require("./models/url")
 const path = require('path')
 const app = express();
 const PORT = 8001;
+const staticRoute = require('./routes/static')
 
 
 
@@ -23,10 +24,12 @@ app.set("views",path.resolve("./views"));
 
 //Handling middelWare
 app.use(express.json());
-
+app.use(express.urlencoded({extended:false}))
 
 
 
 app.use("/url",URLroute);
+app.use("/",staticRoute)
+
 
 app.listen(PORT,() => console.log("Listening to the port 8001"));
